@@ -7,14 +7,6 @@ function startup() {
 		document.querySelector('.tophalf').classList.remove('fullheight');
 	});
 
-	input.addEventListener('blur', e => {
-		if (displayedItem === null) {
-			document.querySelector('.tophalf').classList.add('fullheight');
-		}
-
-		document.querySelector('.search').classList.remove('has-suggestions');
-	});
-
 	// I'm running this on Python's HTTP server; replace this with the appropriate location
 	// if needed.
 	fetch('front-end-task.json')
@@ -86,6 +78,33 @@ function addSuggestion(item, text, destination) {
 }
 
 function activateSuggestion(item) {
+	console.log("HERE");
 	displayedItem = item;
+
+	const avatar = document.createElement('img');
+	avatar.classList.add('avatar');
+
+	const details = document.createElement('dl');
+	details.classList.add('item-details');
+	for (const property of Object.getOwnPropertyNames(item)) {
+		if (property === 'avatar' || property === 'type') {
+			continue;
+		}
+
+		const title = document.createElement('dt');
+		title.textContent = property;
+		const content = document.createElement('dd');
+		content.textContent = item[property];
+
+		if (property.indexOf('name') >= 0) {
+			content.classList.add('important');
+		}
+
+		details.appendChild(title);
+		details.appendChild(content);
+	}
+
+	document.querySelector('.results').replaceChildren(avatar, details);
+	document.querySelector('.search').classList.remove('has-suggestions');
 }
 
