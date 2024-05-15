@@ -1,5 +1,3 @@
-let displayedItem = null;
-
 function startup() {
 	const input = document.querySelector('.tophalf .search input');
 
@@ -78,7 +76,6 @@ function addSuggestion(item, text, destination) {
 }
 
 function activateSuggestion(item) {
-	console.log("HERE");
 	displayedItem = item;
 
 	const avatar = document.createElement('img');
